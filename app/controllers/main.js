@@ -76,12 +76,10 @@ function addProduct() {
     var hoTen = getEle("HoTen").value;
     var matKhau = getEle("MatKhau").value;
     var email = getEle("Email").value;
-    var hinhAnh = getEle("HinhAnh").value;
     var ngonNgu = getEle("loaiNgonNgu").value;
     var loaiND = getEle("loaiNguoiDung").value;
-    var moTa = getEle("MoTa").value;
 
-    var product = new Product("", taiKhoan, hoTen, matKhau, email, hinhAnh, ngonNgu, loaiND, moTa);
+    var product = new Product("", taiKhoan, hoTen, matKhau, email, ngonNgu, loaiND);
 
     service
         .addProductApi(product)
@@ -111,10 +109,8 @@ function addProduct() {
         getEle("HoTen").value = result.data.hoTen;
         getEle("MatKhau").value = result.data.matKhau;
         getEle("Email").value = result.data.email;
-        getEle("HinhAnh").value = result.data.hinhAnh;
-        getEle("loaiNguoiDung").value = result.data.loaiND;
         getEle("loaiNgonNgu").value = result.data.ngonNgu;
-        getEle("MoTa").value = result.data.moTa;
+        getEle("loaiNguoiDung").value = result.data.loaiND;
       })  
       .catch(function(error){
         console.log(error);
@@ -138,7 +134,6 @@ function addProduct() {
     service.updateProductApi(product)
       .then(function() {
         fetchData();
-        console.log(product);
         //Tắt hộp thoại modal
         document.getElementsByClassName("close")[0].click();
       })
