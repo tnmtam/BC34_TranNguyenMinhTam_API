@@ -1,4 +1,5 @@
 var service = new Service();
+var validation = new Validation();
 
 function getEle(id) {
     return document.getElementById(id);
@@ -78,6 +79,80 @@ function addProduct() {
     var email = getEle("Email").value;
     var ngonNgu = getEle("loaiNgonNgu").value;
     var loaiND = getEle("loaiNguoiDung").value;
+
+    var isValid = true;
+    //taiKhoan
+    isValid &= validation.kiemTraRong(
+        taiKhoan,
+        "tbTK",
+        "Vui lòng không để trống!"
+    )
+        && validation.kiemTraTaiKhoanTonTai(
+            taiKhoan,
+            "tbTK",
+            "Tài khoản đã tồn tại ! Vui lòng nhập tài khoản mới !"
+        );
+    //hoTen
+    isValid &= validation.kiemTraRong(
+        hoTen,
+        "tbHoten",
+        "Vui lòng không để trống!"
+    ) && validation.kiemTraKiTuChuoi(
+        hoTen,
+        "tbHoten",
+        "Vui lòng không nhập số và kí tự đặc biệt !"
+    );
+    //matKhau
+    isValid &= validation.kiemTraRong(
+        matKhau,
+        "tbMatKhau",
+        "Vui lòng không để trống!"
+    )
+        && validation.kiemTraMatKhau(
+            matKhau,
+            "tbMatKhau",
+            "Vui lòng nhập ít nhất 1 ký tự hoa, 1 ký tự đặc biệt, một kí tự số "
+        )
+        && validation.kiemTraDoDaiKiTu(
+            matKhau,
+            "tbMatKhau",
+            "Vui lòng nhập 6-8 ký tự !",
+            6,
+            8
+        );
+    //email
+    isValid &= validation.kiemTraRong(
+        email,
+        "tbEmail",
+        "Vui lòng không để trống!"
+    )
+        && validation.kiemTraEmail(
+            email,
+            "tbEmail",
+            "Vui lòng nhập đúng kiểu định dạng email! Vd: email@gmail.com"
+        );
+    //ngonNgu
+    isValid &= validation.kiemTraLoaiNguoiDung(
+        "loaiNgonNgu",
+        "tbLoaiNgonNgu",
+        "Vui lòng chọn ngôn ngữ !"
+    );
+    //nguoiDung
+    isValid &= validation.kiemTraLoaiNguoiDung(
+        "loaiNguoiDung",
+        "tbLoaiNd",
+        "Vui lòng chọn loại người dùng !"
+    )
+        && validation.kiemTraDoDaiKiTu(
+            matKhau,
+            "tbMatKhau",
+            "Vui lòng nhập không quá 60 ký tự !",
+            1,
+            60
+        );
+    
+   
+    if (!isValid) return null;
 
     var product = new Product("", taiKhoan, hoTen, matKhau, email, ngonNgu, loaiND);
 
